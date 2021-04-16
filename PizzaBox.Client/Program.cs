@@ -1,28 +1,111 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Domain.Models;
-using System;
-using sc = System.Console; //alias
+using PizzaBox.Client.Singletons;
 
 namespace PizzaBox.Client
-  {
+{
+  /// <summary>
+  /// 
+  /// </summary>
   public class Program
   {
-      private static void Main()
+    private static readonly PizzaSingleton _pizzaSingleton = PizzaSingleton.Instance;
+    private static readonly StoreSingleton _storeSingleton = StoreSingleton.Instance;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static void Main()
+    {
+      Run();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static void Run()
+    {
+      var order = new Order();
+
+      Console.WriteLine("Welcome to PizzaBox");
+      PrintStoreList();
+
+      order.Customer = new Customer();
+      order.Store = SelectStore();
+      order.Pizza = SelectPizza();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static void PrintOrder(APizza pizza)
+    {
+      Console.WriteLine($"Your order is: {pizza}");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static void PrintPizzaList()
+    {
+      var index = 0;
+
+      foreach (var item in _pizzaSingleton.Pizzas)
       {
-          List<string> storeList = new List<string>{ "Store 001", "Store 002" };
-          var stores = new List<AStore>{ new ChicagoStore(), new NewYorkStore() };
-
-          for (var x = 0; x < stores.Count; x += 1)
-          {
-              sc.WriteLine($"{x} {stores[x]}"); //string interpolation
-          }
-
-          sc.WriteLine("make a selection");
-          string input = sc.ReadLine();
-          int entry = int.Parse(input);
-
-          sc.WriteLine(stores[entry]);
+        Console.WriteLine($"{++index} - {item}");
       }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static void PrintStoreList()
+    {
+      var index = 0;
+
+      foreach (var item in _storeSingleton.Stores)
+      {
+        Console.WriteLine($"{++index} - {item}");
+      }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private static APizza SelectPizza()
+    {
+      var valid = int.TryParse(Console.ReadLine(), out int input);
+
+      if (!valid)
+      {
+        return null;
+      }
+
+      var pizza = _pizzaSingleton.Pizzas[input - 1];
+
+      PrintOrder(pizza);
+
+      return pizza;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private static AStore SelectStore()
+    {
+      var valid = int.TryParse(Console.ReadLine(), out int input);
+
+      if (!valid)
+      {
+        return null;
+      }
+
+      PrintPizzaList();
+
+      return _storeSingleton.Stores[input - 1];
+    }
   }
 }
