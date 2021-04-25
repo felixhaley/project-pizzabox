@@ -2,6 +2,8 @@
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Domain.Models;
 using PizzaBox.Client.Singletons;
+using PizzaBox.Storing;
+using PizzaBox.Domain.Models.Stores;
 
 namespace PizzaBox.Client
 {
@@ -29,9 +31,10 @@ namespace PizzaBox.Client
       var order = new Order();
 
       Console.WriteLine("Welcome to PizzaBox");
+
       PrintStoreList();
 
-      order.Customer = new Customer();
+      order.Customer = GetCustomer();
       order.Store = SelectStore();
       order.Pizza = SelectPizza();
     }
@@ -106,6 +109,16 @@ namespace PizzaBox.Client
       PrintPizzaList();
 
       return _storeSingleton.Stores[input - 1];
+    }
+
+    private static Customer GetCustomer()
+    {
+
+      Console.WriteLine("Please enter your name: ");
+
+      string name = Console.ReadLine();
+
+      return new Customer(name);
     }
   }
 }
