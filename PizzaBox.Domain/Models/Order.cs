@@ -8,10 +8,10 @@ namespace PizzaBox.Domain.Models
   {
     public Customer Customer { get; set; }
     public AStore Store { get; set; }
-    public APizza Pizza { get; set; }
+    //public APizza Pizza { get; set; }
     public List<APizza> Pizzas { get; set; }
 
-    public decimal Total = 0;
+    public decimal Total { get; set; }
 
     /*
         public decimal TotalCost
@@ -25,12 +25,14 @@ namespace PizzaBox.Domain.Models
     public Order()
     {
       Pizzas = new List<APizza>();
+      Total = 0;
     }
     public void AddPizza(APizza pizza)
     {
       Pizzas.Add(pizza);
       Total += pizza.Crust.Price + pizza.Size.Price + pizza.Toppings.Sum(t => t.Price);
     }
+
     /*
         public decimal GetPrice()
         {

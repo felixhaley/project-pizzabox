@@ -15,6 +15,7 @@ namespace PizzaBox.Client
   {
     private static readonly PizzaSingleton _pizzaSingleton = PizzaSingleton.Instance;
     private static readonly StoreSingleton _storeSingleton = StoreSingleton.Instance;
+    private static readonly OrderSingleton _orderSingleton = OrderSingleton.Instance;
 
     /// <summary>
     /// 
@@ -41,6 +42,7 @@ namespace PizzaBox.Client
       {
         PrintPizzaList();
         order.AddPizza(SelectPizza());
+
         Console.WriteLine("\r\nWould you like to add another pizza to your order? Y or N");
         var answer = Console.ReadLine();
         if (!(answer == "Y" || answer == "y"))
@@ -49,7 +51,8 @@ namespace PizzaBox.Client
       Console.WriteLine("\r\nYour order is:");
       PrintOrder(order);
       Console.WriteLine($"And your total is: ${string.Format("{0:#.00}", order.Total)}\r\n");
-      Console.WriteLine("Thank you for your order!\r\n");
+      Console.WriteLine($"Thank you for your order, {order.Customer}!\r\n");
+      OrderSingleton.Update(order);
     }
 
     /// <summary>
@@ -144,7 +147,9 @@ namespace PizzaBox.Client
         return null;
       }
 
-      return _storeSingleton.Stores[input - 1];
+      AStore store = _storeSingleton.Stores[input - 1];
+      store = _orderSingleton.FetchStore(store);
+      return store;
     }
 
     private static Customer GetCustomer()
@@ -152,9 +157,10 @@ namespace PizzaBox.Client
 
       Console.WriteLine("Please enter your name: ");
 
-      string name = Console.ReadLine();
 
-      return new Customer(name);
+      string s = new System.Globalization.CultureInfo("en-US").TextInfo.ToTitleCase(Console.ReadLine());
+      var name = new Customer(s);
+      return (_orderSingleton.FetchCustomer(name));
     }
 
     public static void CustomToppings(CustomPizza pizza)
@@ -192,8 +198,6 @@ namespace PizzaBox.Client
         }
         Console.WriteLine(pizza);
       }
-
-
     }
   }
 }
