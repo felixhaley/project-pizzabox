@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaBox.Storing;
 
 namespace PizzaBox.Storing.Migrations
 {
     [DbContext(typeof(PizzaBoxContext))]
-    partial class PizzaBoxContextModelSnapshot : ModelSnapshot
+    [Migration("20210426032130_1121")]
+    partial class _1121
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,11 +38,16 @@ namespace PizzaBox.Storing.Migrations
                     b.Property<long?>("SizeEntityId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("SizeEntityId1")
+                        .HasColumnType("bigint");
+
                     b.HasKey("EntityId");
 
                     b.HasIndex("CrustEntityId");
 
                     b.HasIndex("SizeEntityId");
+
+                    b.HasIndex("SizeEntityId1");
 
                     b.ToTable("Pizzas");
 
@@ -270,6 +277,10 @@ namespace PizzaBox.Storing.Migrations
                     b.HasOne("PizzaBox.Domain.Models.Size", "Size")
                         .WithMany()
                         .HasForeignKey("SizeEntityId");
+
+                    b.HasOne("PizzaBox.Domain.Models.Size", null)
+                        .WithMany()
+                        .HasForeignKey("SizeEntityId1");
 
                     b.Navigation("Crust");
 

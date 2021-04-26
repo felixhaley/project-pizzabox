@@ -31,8 +31,10 @@ namespace PizzaBox.Domain.Models.Pizzas
     {
       Toppings = new List<Topping>()
       {
-        new Topping() { Name = "Ricotta" },
-        new Topping() { Name = "Bolognese" }
+        new Topping() { Name = "Pepperoni" },
+        new Topping() { Name = "Sausage" },
+        new Topping() { Name = "Mozzarella" },
+        new Topping() { Name = "Marinara" }
       };
     }
   }

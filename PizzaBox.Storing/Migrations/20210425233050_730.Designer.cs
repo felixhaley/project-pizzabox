@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaBox.Storing;
 
 namespace PizzaBox.Storing.Migrations
 {
     [DbContext(typeof(PizzaBoxContext))]
-    partial class PizzaBoxContextModelSnapshot : ModelSnapshot
+    [Migration("20210425233050_730")]
+    partial class _730
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace PizzaBox.Storing.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("SizeEntityId")
+                    b.Property<long>("SizeEntityId")
                         .HasColumnType("bigint");
 
                     b.HasKey("EntityId");
@@ -196,7 +198,7 @@ namespace PizzaBox.Storing.Migrations
                         new
                         {
                             EntityId = 5L,
-                            Name = "Onion",
+                            Name = "Onions",
                             Price = 0m
                         },
                         new
@@ -269,7 +271,9 @@ namespace PizzaBox.Storing.Migrations
 
                     b.HasOne("PizzaBox.Domain.Models.Size", "Size")
                         .WithMany()
-                        .HasForeignKey("SizeEntityId");
+                        .HasForeignKey("SizeEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Crust");
 

@@ -31,10 +31,11 @@ namespace PizzaBox.Client
       var order = new Order();
 
       Console.WriteLine("Welcome to PizzaBox");
+      order.Customer = GetCustomer();
 
       PrintStoreList();
 
-      order.Customer = GetCustomer();
+
       order.Store = SelectStore();
       order.Pizza = SelectPizza();
     }

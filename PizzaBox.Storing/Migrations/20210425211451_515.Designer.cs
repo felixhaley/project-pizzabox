@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaBox.Storing;
 
 namespace PizzaBox.Storing.Migrations
 {
     [DbContext(typeof(PizzaBoxContext))]
-    partial class PizzaBoxContextModelSnapshot : ModelSnapshot
+    [Migration("20210425211451_515")]
+    partial class _515
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace PizzaBox.Storing.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("SizeEntityId")
+                    b.Property<long>("SizeEntityId")
                         .HasColumnType("bigint");
 
                     b.HasKey("EntityId");
@@ -99,6 +101,13 @@ namespace PizzaBox.Storing.Migrations
                     b.HasKey("EntityId");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            EntityId = 1L,
+                            Name = "Uncle John"
+                        });
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Order", b =>
@@ -167,44 +176,6 @@ namespace PizzaBox.Storing.Migrations
                     b.HasIndex("APizzaEntityId");
 
                     b.ToTable("Topping");
-
-                    b.HasData(
-                        new
-                        {
-                            EntityId = 1L,
-                            Name = "Mozzarella",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 2L,
-                            Name = "Marinara",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 3L,
-                            Name = "Pepperoni",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 4L,
-                            Name = "Mushrooms",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 5L,
-                            Name = "Onion",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 6L,
-                            Name = "Sausage",
-                            Price = 0m
-                        });
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Pizzas.CustomPizza", b =>
@@ -238,7 +209,7 @@ namespace PizzaBox.Storing.Migrations
                         new
                         {
                             EntityId = 1L,
-                            Name = "Greek's Pizzeria"
+                            Name = "Chitown Main Street"
                         });
                 });
 
@@ -252,12 +223,7 @@ namespace PizzaBox.Storing.Migrations
                         new
                         {
                             EntityId = 2L,
-                            Name = "Pizza King"
-                        },
-                        new
-                        {
-                            EntityId = 3L,
-                            Name = "Al's Pizza"
+                            Name = "Big Apple"
                         });
                 });
 
@@ -269,7 +235,9 @@ namespace PizzaBox.Storing.Migrations
 
                     b.HasOne("PizzaBox.Domain.Models.Size", "Size")
                         .WithMany()
-                        .HasForeignKey("SizeEntityId");
+                        .HasForeignKey("SizeEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Crust");
 

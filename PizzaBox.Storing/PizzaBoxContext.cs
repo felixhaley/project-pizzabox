@@ -58,22 +58,57 @@ namespace PizzaBox.Storing
 
       builder.Entity<Customer>().HasKey(e => e.EntityId);
 
-      // builder.Entity<Size>().HasMany<APizza>().WithOne(); // orm is creating the has
-      // builder.Entity<APizza>().HasOne<Size>().WithMany();
+      //builder.Entity<Size>().HasMany<APizza>().WithOne(); // orm is creating the has
+      //builder.Entity<APizza>().HasOne<Size>().WithMany();
 
       builder.Entity<ChicagoStore>().HasData(new ChicagoStore[]
       {
-        new ChicagoStore() { EntityId = 1, Name = "Chitown Main Street" }
+        new ChicagoStore() { EntityId = 1, Name = "Greek's Pizzeria" }
       });
 
       builder.Entity<NewYorkStore>().HasData(new NewYorkStore[]
       {
-        new NewYorkStore() { EntityId = 2, Name = "Big Apple" }
+        new NewYorkStore() { EntityId = 2, Name = "Pizza King" }
       });
 
-      builder.Entity<Customer>().HasData(new Customer[]
+      builder.Entity<NewYorkStore>().HasData(new NewYorkStore[]
       {
-        new Customer() { EntityId = 1, Name = "Uncle John" }
+        new NewYorkStore() { EntityId = 3, Name = "Al's Pizza" }
+      });
+
+      //builder.Entity<Customer>().HasData(new Customer[]
+      //{
+      //  new Customer() { EntityId = 1, Name = "Uncle John" }
+      //});
+
+      builder.Entity<Topping>().HasData(new Topping[]
+      {
+        new Topping() { EntityId = 1, Name = "Mozzarella" }
+      });
+
+      builder.Entity<Topping>().HasData(new Topping[]
+      {
+        new Topping() { EntityId = 2, Name = "Marinara" }
+      });
+
+      builder.Entity<Topping>().HasData(new Topping[]
+      {
+        new Topping() { EntityId = 3, Name = "Pepperoni" }
+      });
+
+      builder.Entity<Topping>().HasData(new Topping[]
+      {
+        new Topping() { EntityId = 4, Name = "Mushrooms" }
+      });
+
+      builder.Entity<Topping>().HasData(new Topping[]
+      {
+        new Topping() { EntityId = 5, Name = "Onion" }
+      });
+
+      builder.Entity<Topping>().HasData(new Topping[]
+      {
+        new Topping() { EntityId = 6, Name = "Sausage" }
       });
     }
   }
