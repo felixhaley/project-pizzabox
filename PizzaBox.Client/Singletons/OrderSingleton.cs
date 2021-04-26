@@ -33,7 +33,7 @@ namespace PizzaBox.Client.Singletons
     }
     public static void Update(Order order)
     {
-      _context.Add(order);
+      _context.Orders.Add(order);
       _context.SaveChanges();
     }
 
@@ -45,18 +45,45 @@ namespace PizzaBox.Client.Singletons
       else
         return cust;
     }
-    /*
-        public static List<Order> GetOrders(Customer cust)
+
+    public Crust FetchCrust(Crust crust)
+    {
+      var cr = _context.Crusts.FirstOrDefault(c => c.Name == crust.Name);
+      if (cr == null)
+        return crust;
+      else
+        return cr;
+    }
+
+    public Size FetchSize(Size size)
+    {
+      var sz = _context.Sizes.FirstOrDefault(s => s.Name == size.Name);
+      if (sz == null)
+        return size;
+      else
+        return sz;
+    }
+
+    /*    public APizza FetchPizza(APizza pizza)
         {
-          var orders2 = from r in _context.Customers
-                        join ro in _context.Orders on r.EntityId equals ro.StoreEntityId
-                        where r.Name == store.Name
-                        select r;
+          var pz = _context.Pizzas.FirstOrDefault(p => p.Name == pizza.Name);
+          if (pz == null)
+            return pizza;
+          else
+            return pz;
+        }*/
 
-          return orders2.ToList();
+    public List<Order> GetOrders(Customer cust)
+    {
+      var orders = from r in _context.Customers
+                   join ro in _context.Orders on r.EntityId equals ro.CustomerEntityId
+                   where r.Name == cust.Name
+                   select ro;
+
+      return orders.ToList();
 
 
-        }
-        */
+    }
+
   }
 }

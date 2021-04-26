@@ -19,6 +19,7 @@ namespace PizzaBox.Storing
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Size> Sizes { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<Crust> Crusts { get; set; }
 
     /// <summary>
     /// 
@@ -61,6 +62,7 @@ namespace PizzaBox.Storing
 
       //builder.Entity<Size>().HasMany<APizza>().WithOne(); // orm is creating the has
       //builder.Entity<APizza>().HasOne<Size>().WithMany();
+      //builder.Entity<Order>().HasOne<Customer>();
 
       builder.Entity<ChicagoStore>().HasData(new ChicagoStore[]
       {
@@ -126,6 +128,34 @@ namespace PizzaBox.Storing
 {
               new VeggiePizza() { EntityId = 3, Name = "Veggie Pizza" }
 });*/
+
+      builder.Entity<Size>().HasData(new Size[]
+      {
+              new Size() { EntityId = 1, Name = "Small", Price = 3 }
+      });
+
+      builder.Entity<Size>().HasData(new Size[]
+{
+              new Size() { EntityId = 2, Name = "Medium", Price = 5 }
+});
+      builder.Entity<Size>().HasData(new Size[]
+      {
+              new Size() { EntityId = 3, Name = "Large", Price = 9 }
+      });
+
+      builder.Entity<Crust>().HasData(new Crust[]
+{
+              new Crust() { EntityId = 1, Name = "Thin", Price = 4 }
+});
+
+      builder.Entity<Crust>().HasData(new Crust[]
+{
+              new Crust() { EntityId = 2, Name = "Stuffed", Price = 5 }
+});
+      builder.Entity<Crust>().HasData(new Crust[]
+{
+              new Crust() { EntityId = 3, Name = "Deep Dish", Price = 6 }
+});
     }
   }
 }

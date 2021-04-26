@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using PizzaBox.Domain.Abstracts;
@@ -12,6 +13,8 @@ namespace PizzaBox.Domain.Models
     public List<APizza> Pizzas { get; set; }
 
     public decimal Total { get; set; }
+    public DateTime OrderDate { get; set; }
+    public long CustomerEntityId { get; set; }
 
     /*
         public decimal TotalCost
@@ -26,6 +29,7 @@ namespace PizzaBox.Domain.Models
     {
       Pizzas = new List<APizza>();
       Total = 0;
+      OrderDate = DateTime.Today;
     }
     public void AddPizza(APizza pizza)
     {

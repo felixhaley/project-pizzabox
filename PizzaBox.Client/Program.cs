@@ -32,8 +32,17 @@ namespace PizzaBox.Client
     {
       var order = new Order();
 
-      Console.WriteLine("Welcome to PizzaBox\r\n");
+      Console.WriteLine("Welcome to PizzaBox!\r\n");
       order.Customer = GetCustomer();
+      Console.WriteLine($"\r\nHello {order.Customer}! Would you like to place an order or review your order history?");
+      Console.WriteLine("1 - Place a new order\r\n2 - Review order history");
+      if (Console.ReadLine() == "2")
+      {
+        PrintOrderHistory(order.Customer);
+        return;
+      }
+
+
       var Continue = true;
       PrintStoreList();
 
@@ -106,7 +115,6 @@ namespace PizzaBox.Client
         return null;
       }
 
-
       var pizza = _pizzaSingleton.Pizzas[input - 1];
 
       if (input == 1)
@@ -115,22 +123,25 @@ namespace PizzaBox.Client
       Console.WriteLine("\r\nWhat size pizza would you like?");
       Console.WriteLine("1 - Small ($3)\r\n2 - Medium ($5)\r\n3 - Large ($9)");
       var choice = Console.ReadLine();
+      Size sz;
       if (choice == "1")
-        pizza.AddSize(new Size() { Name = "Small", Price = 3 });
+        sz = (new Size() { Name = "Small", Price = 3 });
       else if (choice == "3")
-        pizza.AddSize(new Size() { Name = "Large", Price = 9 });
+        sz = (new Size() { Name = "Large", Price = 9 });
       else
-        pizza.AddSize(new Size() { Name = "Medium", Price = 5 });
-
+        sz = (new Size() { Name = "Medium", Price = 5 });
+      pizza.AddSize(_orderSingleton.FetchSize(sz));
       Console.WriteLine("\r\nWhat type of crust would you like?");
       Console.WriteLine("1 - Thin ($4)\r\n2 - Stuffed ($5)\r\n3 - Deep Dish ($6)");
       choice = Console.ReadLine();
+      Crust crust;
       if (choice == "2")
-        pizza.AddCrust(new Crust() { Name = "Stuffed", Price = 5 });
+        crust = (new Crust() { Name = "Stuffed", Price = 5 });
       else if (choice == "3")
-        pizza.AddCrust(new Crust() { Name = "Deep Dish", Price = 6 });
+        crust = (new Crust() { Name = "Deep Dish", Price = 6 });
       else
-        pizza.AddCrust(new Crust() { Name = "Thin", Price = 4 });
+        crust = (new Crust() { Name = "Thin", Price = 4 });
+      pizza.AddCrust(_orderSingleton.FetchCrust(crust));
       return pizza;
     }
 
@@ -197,6 +208,17 @@ namespace PizzaBox.Client
           default: break;
         }
         Console.WriteLine(pizza);
+      }
+    }
+
+    public static void PrintOrderHistory(Customer customer)
+    {
+      List<Order> orders = _orderSingleton.GetOrders(customer);
+      var index = 0;
+      Console.WriteLine();
+      foreach (var item in orders)
+      {
+        Console.WriteLine($"{++index}. Order Date: {item.OrderDate}; Total Price: {item.Total}");
       }
     }
   }

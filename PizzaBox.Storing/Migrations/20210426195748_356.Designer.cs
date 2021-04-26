@@ -10,8 +10,8 @@ using PizzaBox.Storing;
 namespace PizzaBox.Storing.Migrations
 {
     [DbContext(typeof(PizzaBoxContext))]
-    [Migration("20210426073336_added back stores")]
-    partial class addedbackstores
+    [Migration("20210426195748_356")]
+    partial class _356
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,7 +93,27 @@ namespace PizzaBox.Storing.Migrations
 
                     b.HasKey("EntityId");
 
-                    b.ToTable("Crust");
+                    b.ToTable("Crusts");
+
+                    b.HasData(
+                        new
+                        {
+                            EntityId = 1L,
+                            Name = "Thin",
+                            Price = 4m
+                        },
+                        new
+                        {
+                            EntityId = 2L,
+                            Name = "Stuffed",
+                            Price = 5m
+                        },
+                        new
+                        {
+                            EntityId = 3L,
+                            Name = "Deep Dish",
+                            Price = 6m
+                        });
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Customer", b =>
@@ -118,24 +138,25 @@ namespace PizzaBox.Storing.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CustomerEntityId")
+                    b.Property<long>("CustomerEntityId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("PizzaEntityId")
-                        .HasColumnType("bigint");
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<long?>("StoreEntityId")
                         .HasColumnType("bigint");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("EntityId");
 
                     b.HasIndex("CustomerEntityId");
 
-                    b.HasIndex("PizzaEntityId");
-
                     b.HasIndex("StoreEntityId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Size", b =>
@@ -154,6 +175,26 @@ namespace PizzaBox.Storing.Migrations
                     b.HasKey("EntityId");
 
                     b.ToTable("Sizes");
+
+                    b.HasData(
+                        new
+                        {
+                            EntityId = 1L,
+                            Name = "Small",
+                            Price = 3m
+                        },
+                        new
+                        {
+                            EntityId = 2L,
+                            Name = "Medium",
+                            Price = 5m
+                        },
+                        new
+                        {
+                            EntityId = 3L,
+                            Name = "Large",
+                            Price = 9m
+                        });
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Topping", b =>
@@ -256,19 +297,15 @@ namespace PizzaBox.Storing.Migrations
                 {
                     b.HasOne("PizzaBox.Domain.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerEntityId");
-
-                    b.HasOne("PizzaBox.Domain.Abstracts.APizza", "Pizza")
-                        .WithMany()
-                        .HasForeignKey("PizzaEntityId");
+                        .HasForeignKey("CustomerEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PizzaBox.Domain.Abstracts.AStore", "Store")
                         .WithMany("Orders")
                         .HasForeignKey("StoreEntityId");
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Pizza");
 
                     b.Navigation("Store");
                 });
