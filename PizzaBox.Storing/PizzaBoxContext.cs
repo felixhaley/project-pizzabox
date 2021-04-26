@@ -80,36 +80,51 @@ namespace PizzaBox.Storing
       //{
       //  new Customer() { EntityId = 1, Name = "Uncle John" }
       //});
+      /*
+            builder.Entity<Topping>().HasData(new Topping[]
+            {
+              new Topping() { EntityId = 1, Name = "Mozzarella" }
+            });
 
-      builder.Entity<Topping>().HasData(new Topping[]
+            builder.Entity<Topping>().HasData(new Topping[]
+            {
+              new Topping() { EntityId = 2, Name = "Marinara" }
+            });
+
+            builder.Entity<Topping>().HasData(new Topping[]
+            {
+              new Topping() { EntityId = 3, Name = "Pepperoni" }
+            });
+
+            builder.Entity<Topping>().HasData(new Topping[]
+            {
+              new Topping() { EntityId = 4, Name = "Mushrooms" }
+            });
+
+            builder.Entity<Topping>().HasData(new Topping[]
+            {
+              new Topping() { EntityId = 5, Name = "Onion" }
+            });
+
+            builder.Entity<Topping>().HasData(new Topping[]
+            {
+              new Topping() { EntityId = 6, Name = "Sausage" }
+            });
+
+      builder.Entity<CustomPizza>().HasData(new CustomPizza[]
       {
-        new Topping() { EntityId = 1, Name = "Mozzarella" }
+              new CustomPizza() { EntityId = 1, Name = "Custom Pizza" }
       });
 
-      builder.Entity<Topping>().HasData(new Topping[]
+      builder.Entity<MeatPizza>().HasData(new MeatPizza[]
       {
-        new Topping() { EntityId = 2, Name = "Marinara" }
+              new MeatPizza() { EntityId = 2, Name = "Meat Pizza" }
       });
 
-      builder.Entity<Topping>().HasData(new Topping[]
-      {
-        new Topping() { EntityId = 3, Name = "Pepperoni" }
-      });
-
-      builder.Entity<Topping>().HasData(new Topping[]
-      {
-        new Topping() { EntityId = 4, Name = "Mushrooms" }
-      });
-
-      builder.Entity<Topping>().HasData(new Topping[]
-      {
-        new Topping() { EntityId = 5, Name = "Onion" }
-      });
-
-      builder.Entity<Topping>().HasData(new Topping[]
-      {
-        new Topping() { EntityId = 6, Name = "Sausage" }
-      });
+      builder.Entity<VeggiePizza>().HasData(new VeggiePizza[]
+{
+              new VeggiePizza() { EntityId = 3, Name = "Veggie Pizza" }
+});*/
     }
   }
 }

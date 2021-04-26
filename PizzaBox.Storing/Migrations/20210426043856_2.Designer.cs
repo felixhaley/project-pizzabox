@@ -10,8 +10,8 @@ using PizzaBox.Storing;
 namespace PizzaBox.Storing.Migrations
 {
     [DbContext(typeof(PizzaBoxContext))]
-    [Migration("20210425211451_515")]
-    partial class _515
+    [Migration("20210426043856_2")]
+    partial class _2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,10 @@ namespace PizzaBox.Storing.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("SizeEntityId")
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SizeEntityId")
                         .HasColumnType("bigint");
 
                     b.HasKey("EntityId");
@@ -101,13 +104,6 @@ namespace PizzaBox.Storing.Migrations
                     b.HasKey("EntityId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            EntityId = 1L,
-                            Name = "Uncle John"
-                        });
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Order", b =>
@@ -209,7 +205,7 @@ namespace PizzaBox.Storing.Migrations
                         new
                         {
                             EntityId = 1L,
-                            Name = "Chitown Main Street"
+                            Name = "Greek's Pizzeria"
                         });
                 });
 
@@ -223,7 +219,12 @@ namespace PizzaBox.Storing.Migrations
                         new
                         {
                             EntityId = 2L,
-                            Name = "Big Apple"
+                            Name = "Pizza King"
+                        },
+                        new
+                        {
+                            EntityId = 3L,
+                            Name = "Al's Pizza"
                         });
                 });
 
@@ -235,9 +236,7 @@ namespace PizzaBox.Storing.Migrations
 
                     b.HasOne("PizzaBox.Domain.Models.Size", "Size")
                         .WithMany()
-                        .HasForeignKey("SizeEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SizeEntityId");
 
                     b.Navigation("Crust");
 

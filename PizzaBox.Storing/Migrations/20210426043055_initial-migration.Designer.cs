@@ -10,7 +10,7 @@ using PizzaBox.Storing;
 namespace PizzaBox.Storing.Migrations
 {
     [DbContext(typeof(PizzaBoxContext))]
-    [Migration("20210425033301_initial-migration")]
+    [Migration("20210426043055_initial-migration")]
     partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,10 @@ namespace PizzaBox.Storing.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("SizeEntityId")
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SizeEntityId")
                         .HasColumnType("bigint");
 
                     b.HasKey("EntityId");
@@ -101,13 +104,6 @@ namespace PizzaBox.Storing.Migrations
                     b.HasKey("EntityId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            EntityId = 1L,
-                            Name = "Uncle John"
-                        });
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Order", b =>
@@ -176,6 +172,44 @@ namespace PizzaBox.Storing.Migrations
                     b.HasIndex("APizzaEntityId");
 
                     b.ToTable("Topping");
+
+                    b.HasData(
+                        new
+                        {
+                            EntityId = 1L,
+                            Name = "Mozzarella",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            EntityId = 2L,
+                            Name = "Marinara",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            EntityId = 3L,
+                            Name = "Pepperoni",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            EntityId = 4L,
+                            Name = "Mushrooms",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            EntityId = 5L,
+                            Name = "Onion",
+                            Price = 0m
+                        },
+                        new
+                        {
+                            EntityId = 6L,
+                            Name = "Sausage",
+                            Price = 0m
+                        });
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Pizzas.CustomPizza", b =>
@@ -209,7 +243,7 @@ namespace PizzaBox.Storing.Migrations
                         new
                         {
                             EntityId = 1L,
-                            Name = "Chitown Main Street"
+                            Name = "Greek's Pizzeria"
                         });
                 });
 
@@ -223,7 +257,12 @@ namespace PizzaBox.Storing.Migrations
                         new
                         {
                             EntityId = 2L,
-                            Name = "Big Apple"
+                            Name = "Pizza King"
+                        },
+                        new
+                        {
+                            EntityId = 3L,
+                            Name = "Al's Pizza"
                         });
                 });
 
@@ -235,9 +274,7 @@ namespace PizzaBox.Storing.Migrations
 
                     b.HasOne("PizzaBox.Domain.Models.Size", "Size")
                         .WithMany()
-                        .HasForeignKey("SizeEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SizeEntityId");
 
                     b.Navigation("Crust");
 

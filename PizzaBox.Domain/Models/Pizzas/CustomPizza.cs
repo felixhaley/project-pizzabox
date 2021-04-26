@@ -13,7 +13,7 @@ namespace PizzaBox.Domain.Models.Pizzas
     /// </summary>
     public override void AddCrust(Crust crust = null)
     {
-      Crust = crust ?? new Crust() { Name = "Thin" };
+      Crust = crust ?? new Crust() { Name = "Thin", Price = 4 };
     }
 
     /// <summary>
@@ -31,9 +31,19 @@ namespace PizzaBox.Domain.Models.Pizzas
     {
       Toppings = new List<Topping>()
       {
-        new Topping() { Name = "Mozzarella" },
-        new Topping() { Name = "Marinara" }
+        new Topping() { Name = "Mozzarella", Price = 1 },
+        new Topping() { Name = "Marinara", Price = 1 }
       };
+    }
+
+    public void NewTopping(Topping t)
+    {
+      Toppings.Add(t);
+    }
+
+    public override void SetName()
+    {
+      Name = "Custom Pizza";
     }
   }
 }

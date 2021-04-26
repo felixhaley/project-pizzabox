@@ -33,6 +33,9 @@ namespace PizzaBox.Storing.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long?>("SizeEntityId")
                         .HasColumnType("bigint");
 
@@ -167,44 +170,6 @@ namespace PizzaBox.Storing.Migrations
                     b.HasIndex("APizzaEntityId");
 
                     b.ToTable("Topping");
-
-                    b.HasData(
-                        new
-                        {
-                            EntityId = 1L,
-                            Name = "Mozzarella",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 2L,
-                            Name = "Marinara",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 3L,
-                            Name = "Pepperoni",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 4L,
-                            Name = "Mushrooms",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 5L,
-                            Name = "Onion",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            EntityId = 6L,
-                            Name = "Sausage",
-                            Price = 0m
-                        });
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Pizzas.CustomPizza", b =>

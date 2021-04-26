@@ -12,9 +12,9 @@ namespace PizzaBox.Client.Singletons
   /// </summary>
   public class PizzaSingleton
   {
-    //private readonly FileRepository _fileRepository = new FileRepository();
+    private readonly FileRepository _fileRepository = new FileRepository();
     private static PizzaSingleton _instance;
-    //private const string _path = @"data/pizzas.xml";
+    private const string _path = @"data/pizzas.xml";
     private readonly PizzaBoxContext _context = new PizzaBoxContext();
 
     public List<APizza> Pizzas { get; set; }
@@ -42,8 +42,13 @@ namespace PizzaBox.Client.Singletons
 
       //_context.Add(cp);
       //_context.SaveChanges();
-
-      Pizzas = _context.Pizzas.ToList();
+      //var PList = new List<APizza>();
+      //PList.Add(new CustomPizza());
+      //PList.Add(new MeatPizza());
+      //PList.Add(new VeggiePizza());
+      //_fileRepository.WriteToFile<List<APizza>>(_path, PList);
+      Pizzas = _fileRepository.ReadFromFile<List<APizza>>(_path);
+      //Pizzas = _context.Pizzas.ToList();
     }
   }
 }

@@ -67,8 +67,9 @@ namespace PizzaBox.Storing.Migrations
                 {
                     EntityId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CrustEntityId = table.Column<long>(type: "bigint", nullable: true),
-                    SizeEntityId = table.Column<long>(type: "bigint", nullable: false),
+                    SizeEntityId = table.Column<long>(type: "bigint", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -85,7 +86,7 @@ namespace PizzaBox.Storing.Migrations
                         column: x => x.SizeEntityId,
                         principalTable: "Sizes",
                         principalColumn: "EntityId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,19 +144,27 @@ namespace PizzaBox.Storing.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Customers",
-                columns: new[] { "EntityId", "Name" },
-                values: new object[] { 1L, "Uncle John" });
-
-            migrationBuilder.InsertData(
                 table: "Stores",
                 columns: new[] { "EntityId", "Discriminator", "Name" },
-                values: new object[] { 1L, "ChicagoStore", "Chitown Main Street" });
+                values: new object[,]
+                {
+                    { 1L, "ChicagoStore", "Greek's Pizzeria" },
+                    { 2L, "NewYorkStore", "Pizza King" },
+                    { 3L, "NewYorkStore", "Al's Pizza" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Stores",
-                columns: new[] { "EntityId", "Discriminator", "Name" },
-                values: new object[] { 2L, "NewYorkStore", "Big Apple" });
+                table: "Topping",
+                columns: new[] { "EntityId", "APizzaEntityId", "Name", "Price" },
+                values: new object[,]
+                {
+                    { 1L, null, "Mozzarella", 0m },
+                    { 2L, null, "Marinara", 0m },
+                    { 3L, null, "Pepperoni", 0m },
+                    { 4L, null, "Mushrooms", 0m },
+                    { 5L, null, "Onion", 0m },
+                    { 6L, null, "Sausage", 0m }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_CustomerEntityId",

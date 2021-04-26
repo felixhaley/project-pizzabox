@@ -15,11 +15,11 @@ namespace PizzaBox.Domain.Models
       }
       else if (Name.Equals("Stuffed"))
       {
-        Price = 6;
+        Price = 5;
       }
       else if (Name.Equals("Deep Dish"))
       {
-        Price = 5;
+        Price = 6;
       }
     }
   }
