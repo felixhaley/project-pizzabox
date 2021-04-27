@@ -42,16 +42,24 @@ namespace PizzaBox.Client
         return;
       }
 
-
       var Continue = true;
       PrintStoreList();
 
       order.Store = SelectStore();
+
+      var PizzaCount = 0;
       while (Continue)
       {
         PrintPizzaList();
         order.AddPizza(SelectPizza());
-
+        PizzaCount++;
+        if (PizzaCount >= 50)
+          break;
+        if (order.Total >= 250)
+        {
+          Console.WriteLine("You have exceeded $250 for your order. Unable to add anything more.");
+          break;
+        }
         Console.WriteLine("\r\nWould you like to add another pizza to your order? Y or N");
         var answer = Console.ReadLine();
         if (!(answer == "Y" || answer == "y"))
@@ -218,7 +226,7 @@ namespace PizzaBox.Client
       Console.WriteLine();
       foreach (var item in orders)
       {
-        Console.WriteLine($"{++index}. Order Date: {item.OrderDate}; Total Price: {item.Total}");
+        Console.WriteLine($"{++index}. Order Date: {item.OrderDate.ToString("d")}; Total Price: {item.Total}");
       }
     }
   }

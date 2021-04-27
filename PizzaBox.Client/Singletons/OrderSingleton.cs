@@ -81,8 +81,6 @@ namespace PizzaBox.Client.Singletons
                    select ro;
 
       return orders.ToList();
-
-
     }
 
   }
