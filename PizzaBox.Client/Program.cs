@@ -32,7 +32,9 @@ namespace PizzaBox.Client
     {
       var order = new Order();
 
-      Console.WriteLine("Welcome to PizzaBox!\r\n");
+      Console.WriteLine("\r\n********************");
+      Console.WriteLine("Welcome to PizzaBox!");
+      Console.WriteLine("********************\r\n");
       order.Customer = GetCustomer();
       Console.WriteLine($"\r\nHello {order.Customer}! Would you like to place an order or review your order history?");
       Console.WriteLine("1 - Place a new order\r\n2 - Review order history");
@@ -226,7 +228,7 @@ namespace PizzaBox.Client
       Console.WriteLine();
       foreach (var item in orders)
       {
-        Console.WriteLine($"{++index}. Order Date: {item.OrderDate.ToString("d")}; Total Price: {item.Total}");
+        Console.WriteLine($"{++index}. Order Date: {item.OrderDate.ToString("d")}; Total Price: {item.Total}; Order #: {item.EntityId}");
       }
     }
   }

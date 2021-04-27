@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Domain.Models;
@@ -18,16 +19,19 @@ namespace PizzaBox.Testing.Tests
     public void Test_AddPizza()
     {
       var sut = new Order();
-      sut.AddPizza(new VeggiePizza());
-      Assert.True(sut.Pizzas[0] is VeggiePizza);
+      var pizza = new MeatPizza() { Size = new Size() { Name = "Medium", Price = 5 } };
+      sut.AddPizza(pizza);
+      foreach (var item in sut.Pizzas)
+        Assert.True(item is APizza);
     }
 
     [Fact]
     public void Test_OrderTotal()
     {
       var sut = new Order();
-      sut.AddPizza(new MeatPizza());
-      Assert.True(sut.Total == 11);
+      var pizza = new MeatPizza() { Size = new Size() { Name = "Medium", Price = 5 } };
+      sut.AddPizza(pizza);
+      Assert.True(sut.Total == 13);
     }
 
     [Fact]
