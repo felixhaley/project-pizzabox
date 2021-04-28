@@ -83,5 +83,14 @@ namespace PizzaBox.Client.Singletons
       return orders.ToList();
     }
 
+    public List<APizza> GetPizzas(Order order)
+    {
+      var pizzas = from r in _context.Pizzas
+                   join ro in _context.Orders on r.OrderEntityId equals ro.EntityId
+                   where ro.EntityId == order.EntityId
+                   select r;
+
+      return pizzas.ToList();
+    }
   }
 }

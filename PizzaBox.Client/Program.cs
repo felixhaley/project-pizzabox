@@ -229,6 +229,10 @@ namespace PizzaBox.Client
       foreach (var item in orders)
       {
         Console.WriteLine($"{++index}. Order Date: {item.OrderDate.ToString("d")}; Total Price: {item.Total}; Order #: {item.EntityId}");
+        List<APizza> pizzas = _orderSingleton.GetPizzas(item);
+        // var pindex = 0;
+        // foreach (var p in pizzas)
+        //   Console.WriteLine($"     {++pindex}. {p.Name}");
       }
     }
   }

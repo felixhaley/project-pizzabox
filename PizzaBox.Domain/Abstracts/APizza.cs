@@ -20,6 +20,8 @@ namespace PizzaBox.Domain.Abstracts
     //public long SizeEntityId { get; set; }
     public List<Topping> Toppings { get; set; }
 
+    public long OrderEntityId { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
